@@ -1,0 +1,60 @@
+<div class="modal fade" id="ModalDetailMovie" tabindex="-1" aria-labelledby="ModalDetailMovieLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalDetailMovieLabel">Detail Movie</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="detailNama" class="form-label fw-bold">Nama</label>
+                            <input type="text" class="form-control" id="detailNama">
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="detailGenre" class="form-label fw-bold">Genre</label>
+                            <input type="text" class="form-control" id="detailGenre">
+                        </div>
+                        <div class="col-md-8">
+                            <button type="button" id="BtnAddMovies" class="btn btn-dark btn-labeled w-100">Add Data</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#BtnAddMovies").click(function () {
+                var movie = {
+                    nama: $("#addNama").val(),
+                    genre: $("#addGenre").val(),
+                };
+
+                console.log("Sending data:", movie);
+
+                $.ajax({
+                    url: '/Movie/AddMovies',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(movie),
+                    success: function (response) {
+                        if (response.success) {
+                            console.log("sukses");
+                            $("#ModalAddMovie").modal('hide');
+                        } else {
+                            console.log("gagal", response.message);
+                        }
+                    },
+                    error: function () {
+                        alert("Error while updating quality point.");
+                    }
+                });
+            });
+        });
+    </script>
+</div>

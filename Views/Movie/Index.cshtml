@@ -1,0 +1,108 @@
+@model Mvc.Models.MovieViewModel
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="row">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-detail">
+                <li class="breadcrumb-item"><a href="http://10.250.15.50">Movie</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Daftar Film</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+    <button class="btn btn-primary" onclick="openAddModal()">Add Movie</button>
+
+    <table class="table" id="moviesTable">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Movie Name</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <div id="ModalUpdateContainer" style="display: none;">
+        @await Html.PartialAsync("ModalUpdateMovie")
+    </div>
+
+    <div id="ModalAddContainer" style="display: none;">
+        @await Html.PartialAsync("ModalAddMovie")
+    </div>
+
+@section Scripts {
+    <script>
+    $(document).ready(function() {
+        reloadMovieTable();
+    });
+
+    function reloadMovieTable() {
+        $.ajax({
+            url: '@Url.Action("GetMovies", "Movie")',
+            method: 'GET',
+            success: function(data) {
+                var tableBody = $('#moviesTable tbody');
+                tableBody.empty();
+
+                $.each(data, function(index, movie) {
+                    tableBody.append('<tr>' +
+                        '<th scope="row">' + (index + 1) + '</th>' +
+                        '<td>' + movie.nama + '</td>' +
+                        '<td>' + movie.genre + '</td>' +
+                        '<td class="text-center">' +
+                            '<a href="javascript:void(0);" onclick="openEditModal(' + movie.id + ', \'' + movie.nama + '\', \'' + movie.genre + '\')">' +
+                                '&#9998;' +  
+                            '</a>' +  
+                            '<a href="javascript:void(0);" onclick="openEditModal(' + movie.id + ', \'' + movie.nama + '\', \'' + movie.genre + '\')">' +
+                                '&#8505;' +  
+                            '</a>' +                         
+                        '</td>' +
+                    '</tr>');
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching movies:', error);
+            }
+        });
+    }
+
+    function openEditModal(id, nama, genre) {
+            console.log(`Opening modal for Movie: ${id}, nama: ${nama}, genre: ${genre}`);
+            $("#ModalUpdateContainer").show();
+            $("#id").val(id);
+            $("#nama").val(nama);
+            $("#genre").val(genre);
+            $("#ModalUpdateMovie").modal('show');
+        }
+
+        $('#ModalUpdateMovie').on('hidden.bs.modal', function () {
+            clearModal();
+            reloadMovieTable();
+        });
+
+    function openAddModal()
+    {
+        $("#ModalAddContainer").show();
+        $("#ModalAddMovie").modal('show');
+
+        $('#ModalAddMovie').on('hidden.bs.modal', function () {
+            clearModal();
+            reloadMovieTable();
+        });
+
+    }
+
+    function clearModal()
+    {
+        $("#nama").val('');
+        $("#genre").val('');
+
+        $("#addNama").val('');
+        $("#addGenre").val('');
+        console.log("clear modal");
+    }
+    </script>
+}
