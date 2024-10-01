@@ -4,6 +4,7 @@ using Mvc.Repositories.Data;
 using Mvc.Repositories.Interfaces;
 
 using Dapper;
+using Protrax.CostTracking.Repositories.Data;
 
 namespace Mvc.Repositories 
 {
@@ -11,6 +12,7 @@ namespace Mvc.Repositories
     {
         private readonly MoviesDatabase _moviesDatabaseConnection;
         private readonly UsersDatabase _usersDatabaseConnection;
+        private readonly FmlxMachDatabase _fmlxMachDatabaseConnection;
 
         private IDbTransaction? _transaction;
 
@@ -21,12 +23,17 @@ namespace Mvc.Repositories
         private readonly ILogger<UserRepository> _userRepositoryLogger;
 
         public UnitOfWork(
+            // harus declare database juga
             MoviesDatabase moviesDatabase,
+            UsersDatabase usersDatabase,
+            FmlxMachDatabase fmlxMachDatabase,
             ILogger<MovieRepository> movieRepositoryLogger,
             ILogger<UserRepository> userRepositoryLogger
         )
         {
             _moviesDatabaseConnection = moviesDatabase;
+            _usersDatabaseConnection = usersDatabase;
+            _fmlxMachDatabaseConnection = fmlxMachDatabase;
             _movieRepositoryLogger = movieRepositoryLogger;
             _userRepositoryLogger = userRepositoryLogger;
         }
@@ -35,7 +42,7 @@ namespace Mvc.Repositories
             _movieRepository ??= new MovieRepository(_moviesDatabaseConnection, _movieRepositoryLogger);
 
         public IUserRepository UserRepository => 
-            _userRepository ??= new UserRepository(_usersDatabaseConnection, _userRepositoryLogger);
+            _userRepository ??= new UserRepository(_usersDatabaseConnection, _moviesDatabaseConnection, _fmlxMachDatabaseConnection,  _userRepositoryLogger);
 
         public void BeginTransaction()
         {

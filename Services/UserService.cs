@@ -24,6 +24,11 @@ namespace Mvc.Services
             _logger = logger;
         }
 
+        public async Task<IEnumerable<Users>> GetDataku()
+        {
+            return await _unitOfWork.UserRepository.GetDataku();
+        }
+
         public async Task<IEnumerable<Users>> GetUserAsync()
         {
             return await _unitOfWork.UserRepository.GetUserAsync();

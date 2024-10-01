@@ -3,6 +3,7 @@ using Mvc.Repositories;
 using Mvc.Repositories.Data;
 using Mvc.Repositories.Interfaces;
 using Mvc.Services;
+using Protrax.CostTracking.Repositories.Data;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,9 +24,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddScoped<MoviesDatabase>();
 builder.Services.AddScoped<UsersDatabase>();
 
+builder.Services.AddScoped<MoviesDatabase>();
+builder.Services.AddScoped<FmlxMachDatabase>();
 
 var app = builder.Build();
 

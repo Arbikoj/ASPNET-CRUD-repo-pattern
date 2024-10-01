@@ -10,16 +10,8 @@ namespace Mvc.Repositories
 {
     public class MovieRepository : IMovieRepository
     {
-        // private readonly string _connectionString;
-        // private readonly ILogService _movieRepositoryLogger;
         private readonly MoviesDatabase _moviesDatabaseConnection;
         private readonly ILogger<MovieRepository> _movieRepositoryLogger;
-
-        // public MovieRepository(string connectionString, ILogService logService)
-        // {
-        //     _connectionString = connectionString;
-        //     _movieRepositoryLogger = logService;
-        // }
 
         public MovieRepository(MoviesDatabase moviesDatabaseConnection, ILogger<MovieRepository> movieRepositoryLogger)
         {

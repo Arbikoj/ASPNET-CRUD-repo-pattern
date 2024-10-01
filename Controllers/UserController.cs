@@ -33,5 +33,12 @@ namespace Mvc.Controllers
             var movies = await _userService.GetUserAsync();
             return Json(movies);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetData()
+        {
+            var data = await _userService.GetDataku();
+            return Json(data);
+        }
     }
 }
