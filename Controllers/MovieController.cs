@@ -51,7 +51,6 @@ namespace Mvc.Controllers
             return Ok(new { success = true, data = movie.FirstOrDefault() });
         }
 
-
         [HttpPut]
         public async Task<IActionResult> UpdateMovies(Movies movie)
         {

@@ -33,11 +33,5 @@ namespace Mvc.Services
         {
             return await _unitOfWork.UserRepository.GetUserAsync();
         }
-
-        // public async Task<IEnumerable<Users>> GetUsersAsync()
-        // {
-        //     return await _unitOfWork.UserRepository.GetUsersAsync();
-
-        // }
     }
 }

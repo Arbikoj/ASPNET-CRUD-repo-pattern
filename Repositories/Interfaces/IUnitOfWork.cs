@@ -6,7 +6,7 @@ namespace Mvc.Repositories.Interfaces
     {
     IMovieRepository MovieRepository { get; }   
     IUserRepository UserRepository { get; }   
-    // Repository 2
+    // Repository 3
     // ..
     // ..
     // Repository ..

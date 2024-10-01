@@ -12,7 +12,6 @@ namespace Mvc.Services
     public class MovieService : IMovieService
     {
         private readonly IUnitOfWork _unitOfWork;
-
         private readonly ILogger<MovieService> _logger;
 
         public MovieService(
@@ -32,7 +31,6 @@ namespace Mvc.Services
         public async Task<bool> DeleteMovieAsync(int id)
         {
             return await _unitOfWork.MovieRepository.DeleteMovieAsync(id);
-
         }
 
         public async Task<IEnumerable<Movies>> GetMovieByIdAsync(int id)
@@ -43,7 +41,6 @@ namespace Mvc.Services
         public async Task<IEnumerable<Movies>> GetMoviesAsync()
         {
             return await _unitOfWork.MovieRepository.GetMoviesAsync();
-
         }
 
         public async Task<bool> UpdateMovieAsync(Movies movie)

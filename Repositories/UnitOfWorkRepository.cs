@@ -15,7 +15,6 @@ namespace Mvc.Repositories
         private readonly FmlxMachDatabase _fmlxMachDatabaseConnection;
 
         private IDbTransaction? _transaction;
-
         private IMovieRepository? _movieRepository;
         private IUserRepository? _userRepository;
 
@@ -47,7 +46,6 @@ namespace Mvc.Repositories
         public void BeginTransaction()
         {
             _transaction = _moviesDatabaseConnection.BeginTransaction();
-
         }
 
         public async Task<int> CommitAsync()
@@ -71,7 +69,6 @@ namespace Mvc.Repositories
         public void Dispose()
         {
             DisposeTransaction();
-
             _moviesDatabaseConnection?.Dispose();
         }
 
@@ -87,6 +84,4 @@ namespace Mvc.Repositories
             _transaction = null;
         }
     }
-
-
 }

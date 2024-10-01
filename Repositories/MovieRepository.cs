@@ -12,7 +12,6 @@ namespace Mvc.Repositories
     {
         private readonly MoviesDatabase _moviesDatabaseConnection;
         private readonly ILogger<MovieRepository> _movieRepositoryLogger;
-
         public MovieRepository(MoviesDatabase moviesDatabaseConnection, ILogger<MovieRepository> movieRepositoryLogger)
         {
             _moviesDatabaseConnection= moviesDatabaseConnection;
@@ -28,7 +27,6 @@ namespace Mvc.Repositories
                 var movie = await connection.QueryAsync<Movies>(
                     "SELECT * FROM movies;"
                 );
-
                 _movieRepositoryLogger.LogInformation("{ClassName} - GetMoviesAsync: Query execution completed", this.GetType().Name);
                 return movie.ToList();
             }
@@ -60,7 +58,6 @@ namespace Mvc.Repositories
                 else
                 {
                     _movieRepositoryLogger.LogWarning("UpdateAsync: No rows updated for Movie with Idx {Id}", movie.Id);
-
                 }
                 return result > 0;
             }
@@ -98,9 +95,7 @@ namespace Mvc.Repositories
                         VALUES 
                             (@nama, @genre)";
                 var result = await connection.ExecuteAsync(sql, new { movie.nama, movie.genre });
-                
                 _movieRepositoryLogger.LogInformation("AddMovieAsync: Movie created successfully");
-
                 return result > 0;
             }
         }
@@ -115,7 +110,6 @@ namespace Mvc.Repositories
                     "SELECT * FROM movies WHERE Id=@Id;",
                     new { Id = id }
                 );
-
                 _movieRepositoryLogger.LogInformation("{ClassName} - GetMoviesByIdAsync: Query execution completed", this.GetType().Name);
                 return movie.ToList();
             }
